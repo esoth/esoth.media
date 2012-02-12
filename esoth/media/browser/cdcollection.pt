@@ -9,7 +9,7 @@
   <div metal:fill-slot="main">
     <tal:main-macro metal:define-macro="main"
                     tal:define="template_id string:@@cd-collection;
-                                albums view/albums">
+                                batch view/albums">
   
         <div tal:replace="structure provider:plone.abovecontenttitle" />
   
@@ -58,7 +58,7 @@
         </form>
 
 
-        <i tal:content="python:'Showing %d album%s' % (len(albums),len(albums)>1 and 's' or '')"/>
+        <i tal:content="python:'Showing %d album%s' % (len(batch),len(batch)>1 and 's' or '')"/>
         <table class="listing" id="cdtable">
           <thead>
             <tr>
@@ -69,7 +69,7 @@
             </tr>
           </thead>
           <tbody>
-            <tal:album repeat="album albums">
+            <tal:album repeat="album batch">
               <tr tal:attributes="href string:@@cd-view?uid=${album/UID}">
                 <td tal:content="album/artist"/>
                 <td>
@@ -84,6 +84,7 @@
             </tal:album>
           </tbody>
         </table>
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
     </tal:main-macro>
   </div>
 </body>

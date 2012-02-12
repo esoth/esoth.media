@@ -1,5 +1,11 @@
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
+try:
+    # Plone >= 4.0
+    from plone.sequencebatch import Batch
+except ImportError:
+    # Plone <= 3.x
+    from Products.CMFPlone.PloneBatch import Batch
 
 class CDCollection(BrowserView):
   def albums(self):
@@ -15,7 +21,8 @@ class CDCollection(BrowserView):
     if year:
       filter['year']=year
     
-    return catalog(filter)
+    result = catalog(filter)
+    return Batch(result, 100, self.request.get('b_start',0), orphan=1)
 
   def artists(self):
     catalog = getToolByName(self.context,'portal_catalog')
