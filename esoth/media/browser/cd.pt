@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:main fill-slot="main"
+            tal:define="uid request/uid;
+                        cd python:view.getcd(uid)">
+                                    
+        <p>
+          <a tal:attributes="href cd/absolute_url">[View Comments]</a>
+        </p>
+        <hr/><br/>
+
+        <div class="mediainfo">
+          <table class="vertical listing">
+						<tr>
+							<th>Artist</th>
+							<td tal:content="cd/getArtist"/>
+						</tr>
+						<tr>
+							<th>Country</th>
+							<td tal:content="python:'/'.join(cd.getCountry())"/>
+						</tr>
+						<tr>
+							<th>Year</th>
+							<td tal:content="cd/getYear"/>
+						</tr>
+          </table>
+        </div>
+        <div tal:condition="cd/getImage">
+        	<img tal:replace="structure python:cd.tag(scale='thumb', css_class='mediaImage')" src="" alt="" />
+        </div>
+        <div tal:condition="python:cd.getImgUrl() and not cd.getImage()">
+        	<img tal:attributes="src cd/getImgUrl"/>
+        </div>
+
+        
+        <div tal:replace="structure cd/getNotes"/>
+
+        <span class="visualClear"><!-- --></span>
+
+</metal:main>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+Add to buildout
+
+eggs =
+    ...
+    esoth.media
+    
+zcml =
+    ...
+    esoth.media

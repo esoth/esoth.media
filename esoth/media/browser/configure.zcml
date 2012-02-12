@@ -1,0 +1,23 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+	  xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="esoth.media">
+
+    <browser:page
+        name="cd-collection"
+        for="*"
+        class=".cd.CDCollection"
+        template="cdcollection.pt"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        name="cd-view"
+        for="*"
+        class=".cd.CDInfo"
+        template="cd.pt"
+        permission="zope2.View"
+        />
+
+</configure>

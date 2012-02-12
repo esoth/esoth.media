@@ -1,0 +1,32 @@
+.mediainfo {
+  float: left;
+  margin-right: 1em;
+}
+
+.mediaImage {
+  margin-bottom: 1em;
+}
+
+#cdtable th, #cdfilter th {
+  text-align: center;
+}
+
+#cdtable td {
+  vertical-align:middle;
+}
+
+#edit-bar {
+    background-color: Black;
+    border-color: Black;
+}
+
+#content-views,
+#contentActionMenus,
+#contentActionMenus dl.actionMenu a,
+#contentActionMenus dl.actionMenu.activated dd {
+    background-color: Black;
+}
+
+#contentActionMenus dl.actionMenu.activated dd {
+    border-bottom: 0.5em solid Black;
+}
