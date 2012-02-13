@@ -78,5 +78,10 @@ class CDInfo(ATCTContent):
     security.declareProtected(View, 'hasTag')
     def hasTag(self):
         return self.getImage() and True or False
+    
+    
+    security.declareProtected(View, 'artistYear')
+    def artistYear(self):
+        return '%s%s' % (self.getArtist(),self.getYear())
 
 registerATCT(CDInfo, PROJECTNAME)

@@ -13,7 +13,7 @@ class CDCollection(BrowserView):
     artist = self.request.get('artist','')
     year = self.request.get('year','')
     country = self.request.get('country','')
-    filter = {'portal_type':'CDInfo'}
+    filter = {'portal_type':'CDInfo','sort_on':'artistYear'}
     if artist:
       filter['artist']=artist
     if country:

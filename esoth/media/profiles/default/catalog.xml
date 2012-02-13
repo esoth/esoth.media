@@ -6,6 +6,9 @@
  <index name="year" meta_type="FieldIndex">
   <indexed_attr value="year"/>
  </index>
+ <index name="artistYear" meta_type="FieldIndex">
+  <indexed_attr value="artistYear"/>
+ </index>
  <index name="country" meta_type="KeywordIndex">
   <indexed_attr value="country"/>
  </index>
