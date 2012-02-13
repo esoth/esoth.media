@@ -82,6 +82,8 @@ class CDInfo(ATCTContent):
     
     security.declareProtected(View, 'artistYear')
     def artistYear(self):
-        return '%s%s' % (self.getArtist(),self.getYear())
+        def anglicize(value):
+          return value.replace('Ä','A')
+        return '%s%s' % (anglicize(self.getArtist()),self.getYear())
 
 registerATCT(CDInfo, PROJECTNAME)

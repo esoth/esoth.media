@@ -20,6 +20,16 @@
     border-color: Black;
 }
 
+div.overlay a:hover,
+#portal-siteactions li a:hover {
+    color: Black;
+}
+
+#content a:hover,
+dl.portlet a:hover {
+    color: Black !important;
+}
+
 #content-views,
 #contentActionMenus,
 #contentActionMenus dl.actionMenu a,
