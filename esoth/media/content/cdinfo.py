@@ -82,8 +82,9 @@ class CDInfo(ATCTContent):
     
     security.declareProtected(View, 'artistYear')
     def artistYear(self):
+        from Products.CMFPlone.utils import safe_unicode as su
         def anglicize(value):
-          return value.replace('Ä','A')
+          return su(value).replace(u'Ä',u'A')
         return '%s%s' % (anglicize(self.getArtist()),self.getYear())
 
 registerATCT(CDInfo, PROJECTNAME)
