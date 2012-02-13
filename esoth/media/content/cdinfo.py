@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
 from Products.ATContentTypes import ATCTMessageFactory as _
 from Products.Archetypes.atapi import Schema
