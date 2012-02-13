@@ -19,7 +19,7 @@ class CDCollection(BrowserView):
     if country:
       filter['country']=country
     if year:
-      filter['year']=year
+      filter['year']=int(year)
     
     result = catalog(filter)
     return Batch(result, 100, self.request.get('b_start',0), orphan=1)
