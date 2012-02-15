@@ -14,7 +14,8 @@
         <p>
           <a tal:attributes="href cd/absolute_url">[View Comments]</a>
         </p>
-        <hr/><br/>
+        <hr/>
+        <h1 tal:content="cd/Title"/>
 
         <div class="mediainfo">
           <table class="vertical listing">

@@ -9,7 +9,11 @@
   <div metal:fill-slot="main">
     <tal:main-macro metal:define-macro="main"
                     tal:define="template_id string:@@cd-collection;
-                                batch view/albums">
+                                result view/albums;
+                                Batch python:modules['Products.CMFPlone'].Batch;
+                                b_start request/b_start|python:0;
+                                batch python:Batch(result, 100, b_start, orphan=1);
+                                full python:len(batch)==len(result);">
   
         <div tal:replace="structure provider:plone.abovecontenttitle" />
   
@@ -57,8 +61,9 @@
         </table>
         </form>
 
-
-        <i tal:content="python:'Showing %d album%s' % (len(batch),len(batch)>1 and 's' or '')"/>
+        <i tal:condition="full" tal:content="python:'Showing %d album%s' % (len(batch),len(batch)>1 and 's' or '')"/>
+        <i tal:condition="not:full" tal:content="python:'Showing albums %d-%d of %d' % (b_start,b_start+len(batch),len(result))"/>
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
         <table class="listing" id="cdtable">
           <thead>
             <tr>
