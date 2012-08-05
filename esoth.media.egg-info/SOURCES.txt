@@ -14,5 +14,7 @@ esoth.media.egg-info/top_level.txt
 esoth/media/__init__.py
 esoth/media/config.py
 esoth/media/interfaces.py
+esoth/media/browser/__init__.py
+esoth/media/browser/cd.py
 esoth/media/content/__init__.py
 esoth/media/content/cdinfo.py

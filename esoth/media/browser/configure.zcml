@@ -20,4 +20,18 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        name="fetch_image"
+        for="*"
+        class=".fetcher.ImageFetch"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        name="fetch_webpage"
+        for="*"
+        class=".fetcher.WebpageFetch"
+        permission="zope2.View"
+        />
+
 </configure>
