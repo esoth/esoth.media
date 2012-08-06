@@ -21,14 +21,14 @@
         />
 
     <browser:page
-        name="fetch_image"
+        name="proxyi"
         for="*"
         class=".fetcher.ImageFetch"
         permission="zope2.View"
         />
 
     <browser:page
-        name="fetch_webpage"
+        name="proxyw"
         for="*"
         class=".fetcher.WebpageFetch"
         permission="zope2.View"

@@ -1,24 +1,29 @@
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
+from urllib2 import urlopen
 
 class ImageFetch(BrowserView):
-  def __call__(self, url):
-    from urllib import urlopen
-    f=urlopen(url)
+  def __init__(self,context,request):
+    self.context=context
+    self.request=request
+
+  def __call__(self, u):
+    f = urlopen(u)
     img = f.read()
-    id = url.split('/')[-1]
-    
-    self.context.invokeFactory('Image',id)
-    self.context[id].setImage(img)
-    return self.context[id]()
+
+    mimereg = getToolByName(self,'mimetypes_registry')
+    mimetype = mimereg.lookupExtension(url.split('.')[-1])
+    self.request.response.setHeader('Content-Type', mimetype)
+    return img
 
 class WebpageFetch(BrowserView):
-  def __call__(self, url):
-    from urllib import urlopen
-    f=urlopen(url)
+  def __init__(self,context,request):
+    self.context=context
+    self.request=request
+
+  def __call__(self, u):
+    f = urlopen(u)
     text = f.read()
-    id = url.split('/')[-1]
-    
-    self.context.invokeFactory('Document',id)
-    self.context[id].setText(text,mimetype="text/html")
-    return self.context[id]()
+
+    self.request.response.setHeader('Content-Type', 'text/html')
+    return text
