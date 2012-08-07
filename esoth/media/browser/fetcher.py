@@ -12,7 +12,7 @@ class ImageFetch(BrowserView):
     img = f.read()
 
     mimereg = getToolByName(self,'mimetypes_registry')
-    mimetype = mimereg.lookupExtension(url.split('.')[-1])
+    mimetype = mimereg.lookupExtension(u.split('.')[-1])
     self.request.response.setHeader('Content-Type', mimetype)
     return img
 
