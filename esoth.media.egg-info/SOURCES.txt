@@ -16,5 +16,6 @@ esoth/media/config.py
 esoth/media/interfaces.py
 esoth/media/browser/__init__.py
 esoth/media/browser/cd.py
+esoth/media/browser/fetcher.py
 esoth/media/content/__init__.py
 esoth/media/content/cdinfo.py
