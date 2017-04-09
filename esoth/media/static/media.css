@@ -1,0 +1,5 @@
+body#visual-portal-wrapper.pat-plone #edit-zone .contenttype-albummetadata:after,
+.contenttype-albummetadata:before {
+    font-family: "Glyphicons Halflings" !important;
+    content: "\e201";
+}

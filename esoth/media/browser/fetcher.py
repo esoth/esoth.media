@@ -1,29 +1,40 @@
-from Products.Five.browser import BrowserView
-from Products.CMFCore.utils import getToolByName
 from urllib2 import urlopen
+import os
+import plone.api
+from Products.Five.browser import BrowserView
 
-class ImageFetch(BrowserView):
-  def __init__(self,context,request):
-    self.context=context
-    self.request=request
+blockers = [
+    '//imgur.com',
+    '//m.imgur.com',
+    '//i.imgur.com',
+]
 
-  def __call__(self, u):
-    f = urlopen(u)
-    img = f.read()
+BASE = '//www.esoth.com'
+if os.name == 'nt':
+    BASE = 'http://localhost:8080/Plone'
 
-    mimereg = getToolByName(self,'mimetypes_registry')
-    mimetype = mimereg.lookupExtension(u.split('.')[-1])
-    self.request.response.setHeader('Content-Type', mimetype)
-    return img
 
-class WebpageFetch(BrowserView):
-  def __init__(self,context,request):
-    self.context=context
-    self.request=request
+def proxify(url):
+    return '%s/proxy?u=http:%s' % (BASE, url)
 
-  def __call__(self, u):
-    f = urlopen(u)
-    text = f.read()
 
-    self.request.response.setHeader('Content-Type', 'text/html')
-    return text
+class ProxyFetch(BrowserView):
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def __call__(self):
+        uri = self.request.get('uri') or self.request.get('u')
+
+        f = urlopen(uri)
+        contents = f.read()
+
+        mimereg = plone.api.portal.get_tool('mimetypes_registry')
+        mimetype = mimereg.lookupExtension(uri.split('.')[-1])
+        if mimetype:
+            self.request.response.setHeader('Content-Type', mimetype)
+        else:
+            for url in blockers:
+                contents = contents.replace(url, proxify(url))
+            self.request.response.setHeader('Content-Type', 'text/html')
+        return contents

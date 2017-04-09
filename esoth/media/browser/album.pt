@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:main fill-slot="main">
+
+    <h1 tal:content="context/title"/>
+
+    <div class="mediainfo">
+        <table class="vertical listing">
+            <tr>
+                <th>Artist</th>
+                <td tal:content="context/artist"/>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td tal:content="python:'/'.join(context.country)"/>
+            </tr>
+            <tr>
+                <th>Year</th>
+                <td tal:content="context/year"/>
+            </tr>
+        </table>
+    </div>
+    <div tal:condition="context/image"
+         tal:define="scale context/@@images;">
+        <img tal:replace="structure python:scale.scale('image', scale='large').tag()"/>
+    </div>
+    <div tal:condition="python:getattr(context, 'image_url', None) and not context.image">
+        <img tal:attributes="src context/image_url"/>
+    </div>
+
+
+    <div id="parent-fieldname-notes"
+         tal:condition="context/notes"
+         tal:content="structure python:context.notes.output_relative_to(view.context)"/>
+
+</metal:main>
+
+</body>
+</html>

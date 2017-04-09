@@ -1,0 +1,10 @@
+<configure
+        xmlns="http://namespaces.zope.org/zope"
+        i18n_domain="esoth.media">
+    <adapter name="country" factory=".indexers.country"/>
+    <adapter name="year" factory=".indexers.year"/>
+    <adapter name="img_name" factory=".indexers.img_name"/>
+    <adapter name="artist" factory=".indexers.artist"/>
+    <adapter name="artistYear" factory=".indexers.artistYear"/>
+    <adapter name="SearchableText" factory=".indexers.SearchableText"/>
+</configure>

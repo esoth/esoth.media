@@ -1,0 +1,103 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="esoth.media">
+<body>
+<div metal:fill-slot="main">
+    <tal:main-macro metal:define-macro="main"
+                    tal:define="template_id string:@@album-collection;
+                                result view/albums;
+                                Batch python:modules['Products.CMFPlone'].Batch;
+                                b_start request/b_start|python:0;
+                                batch python:Batch(result, 100, b_start, orphan=1);
+                                full python:len(batch)==len(result);">
+
+        <div tal:replace="structure provider:plone.abovecontenttitle"/>
+
+        <h1 class="documentFirstHeading">
+            CD Collection
+        </h1>
+
+        <form tal:attributes="action string:${here/absolute_url}/$template_id">
+            <table class="listing" id="cdfilter">
+                <thead>
+                <tr>
+                    <th>Artist</th>
+                    <th>Country</th>
+                    <th>Year</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <select name="artist" onchange="form.submit()">
+                            <option></option>
+                            <tal:opts repeat="opt view/artists">
+                                <option tal:content="opt"
+                                        tal:attributes="selected python:opt==view.request.get('artist') and 'selected'"/>
+                            </tal:opts>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="country" onchange="form.submit()">
+                            <option></option>
+                            <tal:opts repeat="opt view/countries">
+                                <option tal:content="opt"
+                                        tal:attributes="selected python:opt==view.request.get('country') and 'selected'"/>
+                            </tal:opts>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="year" onchange="form.submit()">
+                            <option></option>
+                            <tal:opts repeat="opt view/years">
+                                <option tal:content="opt"
+                                        tal:attributes="selected python:opt==view.request.get('year') and 'selected'"/>
+                            </tal:opts>
+                        </select>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+
+        <i tal:condition="full" tal:content="python:'Showing %d album%s' % (len(batch),len(batch)>1 and 's' or '')"/>
+        <i tal:condition="not:full"
+           tal:content="python:'Showing albums %d-%d of %d' % (b_start,b_start+len(batch),len(result))"/>
+        <div metal:use-macro="here/batch_macros/macros/navigation"/>
+        <table class="listing" id="cdtable">
+            <thead>
+            <tr>
+                <th>Artist</th>
+                <th colspan="2">Album</th>
+                <th>Country</th>
+                <th>Year</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tal:album repeat="album batch">
+                <tr tal:attributes="href string:@@cd-view?uid=${album/UID}">
+                    <td tal:content="album/artist"/>
+                    <td>
+                        <img tal:attributes="src string:${album/getURL}/@@images/image/icon"/>
+                    </td>
+                    <td>
+                        <a class="pat-plone-modal"
+                           data-pat-plone-modal='{"actionOptions": {"disableAjaxFormSubmit":true, "redirectOnResponse":true}}'
+                           tal:content="album/Title"
+                           tal:attributes="href album/getURL"/>
+                    </td>
+                    <td tal:content="python:'/'.join(album['country'])"/>
+                    <td tal:content="album/year"/>
+                </tr>
+            </tal:album>
+            </tbody>
+        </table>
+        <div metal:use-macro="here/batch_macros/macros/navigation"/>
+    </tal:main-macro>
+</div>
+</body>
+</html>

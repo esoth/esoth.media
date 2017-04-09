@@ -31,11 +31,8 @@ setup(name='esoth.media',
       test_suite = 'esoth.media.tests.test_docs.test_suite',
       entry_points="""
       # -*- entry_points -*-
-      [distutils.setup_keywords]
-      paster_plugins = setuptools.dist:assert_string_list
-
-      [egg_info.writers]
-      paster_plugins.txt = setuptools.command.egg_info:write_arg
+      [z3c.autoinclude.plugin]
+      target = plone
       """,
       )
 

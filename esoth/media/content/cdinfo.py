@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
 from Products.ATContentTypes import ATCTMessageFactory as _
 from Products.Archetypes.atapi import Schema
@@ -15,53 +14,54 @@ from zope.interface import implements
 
 CDSchema = ATContentTypeSchema.copy() + Schema((
     StringField('artist',
-        required = False,
-        widget = StringWidget(
-            label= u'Artist'),
-    ),
+                required=False,
+                widget=StringWidget(
+                    label=u'Artist'),
+                ),
     LinesField('country',
-        required = False,
-        widget = LinesWidget(
-            label= u'Country'),
-    ),
+               required=False,
+               widget=LinesWidget(
+                   label=u'Country'),
+               ),
     IntegerField('year',
-        required = False,
-        widget = IntegerWidget(
-            label= u'Year'),
+                 required=False,
+                 widget=IntegerWidget(
+                     label=u'Year'),
 
-    ),
+                 ),
     TextField('notes',
-        required = False,
-        widget = RichWidget(
-            label= u'Notes'),
+              required=False,
+              widget=RichWidget(
+                  label=u'Notes'),
 
-    ),
+              ),
     StringField('imgUrl',
-        required = False,
-        widget = StringWidget(
-            label= u'Image (url)'),
+                required=False,
+                widget=StringWidget(
+                    label=u'Image (url)'),
 
-    ),
+                ),
     ImageField('image',
-        required = False,
-        storage = AnnotationStorage(migrate=True),
-        sizes= {'large'   : (768, 768),
-                'preview' : (400, 400),
-                'mini'    : (200, 200),
-                'thumb'   : (170, 170),
-                'tile'    :  (64, 64),
-                'icon'    :  (32, 32),
-                'listing' :  (16, 16),
-               },
-        widget = ImageWidget(
-            label= u'Image (upload)'),
+               required=False,
+               storage=AnnotationStorage(migrate=True),
+               sizes={'large': (768, 768),
+                      'preview': (400, 400),
+                      'mini': (200, 200),
+                      'thumb': (170, 170),
+                      'tile': (64, 64),
+                      'icon': (32, 32),
+                      'listing': (16, 16),
+                      },
+               widget=ImageWidget(
+                   label=u'Image (upload)'),
 
-    ),
-    
-    ),
+               ),
+
+),
     marshall=RFC822Marshaller()
-    )
-    
+)
+
+
 class CDInfo(ATCTContent):
     schema = CDSchema
     implements(ICDInfo)
@@ -69,6 +69,7 @@ class CDInfo(ATCTContent):
     security = ClassSecurityInfo()
 
     security.declareProtected(View, 'tag')
+
     def tag(self, **kwargs):
         """Generate image tag using the api of the ImageField
         """
@@ -77,15 +78,9 @@ class CDInfo(ATCTContent):
         return self.getField('image').tag(self, **kwargs)
 
     security.declareProtected(View, 'hasTag')
+
     def hasTag(self):
         return self.getImage() and True or False
-    
-    
-    security.declareProtected(View, 'artistYear')
-    def artistYear(self):
-        from Products.CMFPlone.utils import safe_unicode as su
-        def anglicize(value):
-          return su(value).replace(u'Ä',u'A')
-        return '%s%s' % (anglicize(self.getArtist()),self.getYear())
+
 
 registerATCT(CDInfo, PROJECTNAME)

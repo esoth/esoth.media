@@ -5,32 +5,25 @@
     i18n_domain="esoth.media">
 
     <browser:page
-        name="cd-collection"
+        name="album-collection"
         for="*"
-        class=".cd.CDCollection"
-        template="cdcollection.pt"
+        class=".album.AlbumCollection"
+        template="collection.pt"
         permission="zope2.View"
         />
 
     <browser:page
-        name="cd-view"
-        for="*"
-        class=".cd.CDInfo"
-        template="cd.pt"
+        name="view"
+        for="esoth.media.interfaces.IAlbumMetadata"
+        class=".album.AlbumMetadata"
+        template="album.pt"
         permission="zope2.View"
         />
 
     <browser:page
-        name="proxyi"
+        name="proxy"
         for="*"
-        class=".fetcher.ImageFetch"
-        permission="zope2.View"
-        />
-
-    <browser:page
-        name="proxyw"
-        for="*"
-        class=".fetcher.WebpageFetch"
+        class=".fetcher.ProxyFetch"
         permission="zope2.View"
         />
 

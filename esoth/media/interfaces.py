@@ -3,9 +3,13 @@ from plone.autoform import directives
 from plone.namedfile.field import NamedBlobImage
 from plone.supermodel import model
 import zope.schema as schema
+from zope.interface import Interface
+from plone.app.textfield import RichText
 
 from esoth.media import _
 
+class ICDInfo(Interface):
+    """ legacy """
 
 class IAlbumMetadata(model.Schema):
     """ Metadata for album collection """
@@ -14,6 +18,11 @@ class IAlbumMetadata(model.Schema):
         title=_(u'Artist'),
         required=True,
     )
+    directives.widget(
+        'artist',
+        AjaxSelectFieldWidget,
+        vocabulary='esoth.media.Artists'
+    )
 
     country = schema.List(
         title=_(u'Country'),
@@ -21,7 +30,7 @@ class IAlbumMetadata(model.Schema):
         value_type=schema.TextLine(),
     )
     directives.widget(
-        'subjects',
+        'country',
         AjaxSelectFieldWidget,
         vocabulary='esoth.media.Countries'
     )
@@ -36,7 +45,12 @@ class IAlbumMetadata(model.Schema):
         required=False,
     )
 
-    img = NamedBlobImage(
+    image = NamedBlobImage(
         title=_(u'Image'),
+        required=False,
+    )
+    notes = RichText(
+        title=_(u'Notes'),
+        description=u"",
         required=False,
     )
